@@ -42,6 +42,7 @@ module Fog
       request :start_instance
       request :halt_instance
       request :reboot_instance
+      request :restore_instance
       request :list_plans
       request :list_regions
       request :list_region_availability

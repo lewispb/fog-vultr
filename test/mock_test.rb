@@ -22,6 +22,14 @@ class MockTest < VultrTest
     assert_nil compute.servers.get(server.id)
   end
 
+  def test_restores_a_server_from_its_snapshot
+    server = compute.servers.create(region: "ewr", plan: "vc2-16c-64gb", os_id: 501)
+    snapshot = server.snapshot("windows-golden")
+
+    assert server.restore(snapshot)
+    assert_equal snapshot.id, compute.servers.get(server.id).snapshot_id
+  end
+
   def test_pages_through_servers
     3.times { compute.create_instance(region: "ewr", plan: "vc2-16c-64gb", os_id: 2284) }
 

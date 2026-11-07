@@ -83,6 +83,16 @@ class ServerTest < VultrTest
     refute snapshot.ready?
   end
 
+  def test_restores_a_server_from_a_snapshot
+    server = compute.servers.new(fixture(:instance))
+    stub = stub_request(:post, "#{API}/instances/#{server.id}/restore")
+      .with(body: { "snapshot_id" => fixture(:snapshot)["id"] })
+      .to_return(status: 202, body: JSON.generate("status" => { "restore_type" => "snapshot_id", "status" => "restoring" }))
+
+    assert server.restore(compute.snapshots.new(fixture(:snapshot)))
+    assert_requested stub
+  end
+
   def test_get_returns_nil_for_a_missing_server
     stub_vultr :get, "instances/missing", status: 404, body: { "error" => "Invalid instance-id.", "status" => 404 }
 

@@ -89,6 +89,15 @@ module Fog
           true
         end
 
+        # Reinstalls the server's disk from a snapshot, keeping the server, its
+        # address and its billed hour. It isn't ready again until Vultr has
+        # copied the snapshot back.
+        def restore(snapshot)
+          requires :id
+          service.restore_instance(id, snapshot_id: snapshot.respond_to?(:id) ? snapshot.id : snapshot)
+          true
+        end
+
         # Snapshots the server, returning the snapshot, which is pending
         # until Vultr has copied the disk
         def snapshot(description = nil)

@@ -37,7 +37,7 @@ Vultr reports the server active, running and ok.
 
 | Collection | Vultr | Notes |
 |---|---|---|
-| `servers` | instances | `all(tag:, label:, main_ip:, region:)`; `start`, `stop`, `reboot`, `snapshot(description)` |
+| `servers` | instances | `all(tag:, label:, main_ip:, region:)`; `start`, `stop`, `reboot`, `snapshot(description)`, `restore(snapshot)` |
 | `flavors` | plans | `all(type:, os:)`; `os: "windows"` gives the plans Windows runs on |
 | `regions` | regions | `available_plans(type:)` gives what a region can deploy now |
 | `images` | operating systems | `windows?` |
