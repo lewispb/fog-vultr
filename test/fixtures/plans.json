@@ -1,0 +1,14 @@
+[
+  {
+    "id": "vc2-16c-64gb", "vcpu_count": 16, "ram": 65536, "disk": 1280, "disk_type": "SSD", "disk_count": 1, "bandwidth": 10240,
+    "monthly_cost": 320, "hourly_cost": 0.438, "monthly_cost_preemptible": 0, "hourly_cost_preemptible": 0,
+    "invoice_type": "monthly", "type": "vc2", "locations": [ "ewr", "dfw", "sjc" ], "cpu_vendor": "Intel",
+    "deploy_ondemand": true, "deploy_preemptible": false
+  },
+  {
+    "id": "voc-g-16c-64gb-320s-amd", "vcpu_count": 16, "ram": 65536, "disk": 320, "disk_type": "NVMe", "disk_count": 1, "bandwidth": 9216,
+    "monthly_cost": 480, "hourly_cost": 0.658, "monthly_cost_preemptible": 0, "hourly_cost_preemptible": 0,
+    "invoice_type": "monthly", "type": "voc", "locations": [ "ewr", "ord", "sjc" ], "cpu_vendor": "AMD",
+    "deploy_ondemand": true, "deploy_preemptible": false
+  }
+]

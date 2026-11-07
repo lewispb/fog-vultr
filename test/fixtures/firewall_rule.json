@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "action": "accept",
+  "ip_type": "v4",
+  "protocol": "tcp",
+  "port": "22",
+  "subnet": "198.51.100.0",
+  "subnet_size": 24,
+  "source": "",
+  "notes": "controller"
+}

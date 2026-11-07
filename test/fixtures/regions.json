@@ -1,0 +1,4 @@
+[
+  { "id": "ewr", "city": "New Jersey", "country": "US", "continent": "North America", "options": [ "ddos_protection", "block_storage_high_perf" ], "connectivity": [ "public_ip" ] },
+  { "id": "ord", "city": "Chicago", "country": "US", "continent": "North America", "options": [ "ddos_protection" ], "connectivity": [ "public_ip" ] }
+]

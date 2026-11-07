@@ -1,0 +1,4 @@
+[
+  { "id": 2284, "name": "Ubuntu 24.04 LTS x64", "arch": "x64", "family": "ubuntu" },
+  { "id": 501, "name": "Windows 2022 Standard x64", "arch": "x64", "family": "windows" }
+]

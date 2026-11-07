@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+# Tries fog-vultr against a real Vultr account.
+#
+#   VULTR_API_KEY=... bin/smoke             # reads only: regions, plans, Windows images
+#   VULTR_API_KEY=... bin/smoke --boot ewr  # also boots the smallest Ubuntu server in ewr,
+#                                           # waits for it, and destroys it
+#
+# A booted server is tagged fog-vultr-smoke and destroyed even when the run fails.
+
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+require "fog/vultr"
+
+compute = Fog::Compute.new(provider: "Vultr", vultr_api_key: ENV.fetch("VULTR_API_KEY"))
+
+us = compute.regions.all.select { |region| region.country == "US" }
+puts "US regions: #{us.map(&:id).join(", ")}"
+
+windows = compute.flavors.all(type: "all", os: "windows").select { |flavor| flavor.vcpu_count == 16 && flavor.ram == 65536 }
+windows.each { |flavor| puts "Windows 16 vCPU / 64 GB: #{flavor.id} $#{flavor.hourly_cost}/h in #{(flavor.locations & us.map(&:id)).join(", ")}" }
+puts "Windows images: #{compute.images.all.select(&:windows?).map(&:name).join(", ")}"
+
+region = ARGV[1] if ARGV[0] == "--boot"
+
+if region
+  ubuntu = compute.images.all.find { |image| image.name.start_with?("Ubuntu 24.04") }
+  plan = compute.flavors.all(type: "vc2").select { |flavor| flavor.available_in?(region) && flavor.hourly_cost.to_f > 0 }.min_by(&:hourly_cost)
+
+  begin
+    started = Time.now
+    server = compute.servers.create(region: region, plan: plan.id, os_id: ubuntu.id, label: "fog-vultr-smoke", tags: [ "fog-vultr-smoke" ])
+    puts "Created #{server.id} (#{plan.id}) in #{region}"
+    server.wait_for(600, 5) { ready? }
+    puts "Ready at #{server.public_ip_address} after #{(Time.now - started).round} s"
+    puts "Listed by tag: #{compute.servers.all(tag: "fog-vultr-smoke").map(&:id).include?(server.id)}"
+  ensure
+    if server&.id
+      server.destroy
+      puts "Destroyed #{server.id}"
+    end
+  end
+end

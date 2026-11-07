@@ -1,0 +1,6 @@
+{
+  "id": "3b8066a7-b438-455a-9688-44afc9a3597f",
+  "date_created": "2026-11-07T19:20:00+00:00",
+  "name": "ci",
+  "ssh_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExampleKeyForTests ci"
+}

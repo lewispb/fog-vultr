@@ -1,0 +1,9 @@
+{
+  "id": "1d5a6c8f",
+  "description": "ci",
+  "date_created": "2026-11-07T19:10:00+00:00",
+  "date_modified": "2026-11-07T19:15:00+00:00",
+  "instance_count": 2,
+  "rule_count": 1,
+  "max_rule_count": 50
+}
