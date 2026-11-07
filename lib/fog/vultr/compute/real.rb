@@ -7,7 +7,8 @@ module Fog
       # connection is retried the same way for GET, PUT and DELETE only, so a
       # create is never sent twice. Any other error status raises
       # Fog::Vultr::Compute::NotFound (404) or Fog::Vultr::Compute::Error, with
-      # Vultr's message.
+      # Vultr's message and without Excon's error, whose dump has the response's
+      # headers, as its cause.
       class Real
         include Paging
 
@@ -32,7 +33,7 @@ module Fog
             )
           end
         rescue Excon::Error::HTTPStatus => error
-          raise error_for(error.response)
+          raise error_for(error.response), cause: nil
         end
 
         def reload

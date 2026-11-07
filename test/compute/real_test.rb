@@ -23,6 +23,7 @@ class RealTest < VultrTest
 
     error = assert_raises(Fog::Vultr::Compute::Error) { compute.create_instance(region: "ewr", plan: "vc2-16c-64gb", os_id: 2284) }
     assert_equal "400 You have reached the maximum monthly fee limit for this account.", error.message
+    assert_nil error.cause
   end
 
   def test_retries_a_rate_limited_create

@@ -23,7 +23,7 @@ region = ARGV[1] if ARGV[0] == "--boot"
 
 if region
   ubuntu = compute.images.all.find { |image| image.name.start_with?("Ubuntu 24.04") }
-  plan = compute.flavors.all(type: "vc2").select { |flavor| flavor.available_in?(region) && flavor.hourly_cost.to_f > 0 }.min_by(&:hourly_cost)
+  plan = compute.flavors.all(type: "vc2").select { |flavor| flavor.available_in?(region) && flavor.ram >= 1024 && flavor.hourly_cost.to_f > 0 }.min_by(&:hourly_cost)
 
   begin
     started = Time.now
